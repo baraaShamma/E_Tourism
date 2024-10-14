@@ -30,7 +30,6 @@ class _SplashPageState extends State<SplashPage> {
         bloc: appBloc,
         listener: (context, state) async {
           if (state is SessionState) {
-            // context.goNamed(RoutesNames.postsScreen);
             Timer(const Duration(seconds: 1),() {
             context.goNamed(RoutesNames.MainView);
             });

@@ -16,7 +16,6 @@ class AdsBloc extends Bloc<AdsEvent, AdsState> {
     on<FetchAdsEvent>((event, emit) async {
       emit(AdsLoading());
       try {
-        print("++++++++++++++++++++++++++++++++");
         final ads = await getAdsUseCase.call();
         emit(AdsLoaded(ads));
       } catch (e) {

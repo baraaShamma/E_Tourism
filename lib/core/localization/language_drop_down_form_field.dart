@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 import 'language_manager.dart';
 
-class LanguageDropDownFormFieldWeb extends StatefulWidget {
+class LanguageDropDown extends StatefulWidget {
   final List<LanguageType> items;
   final String label;
   final void Function(LanguageType selectedItem) onChanged;
 
-  const LanguageDropDownFormFieldWeb({
+  const LanguageDropDown({
     super.key,
     required this.label,
     required this.items,
@@ -16,12 +16,12 @@ class LanguageDropDownFormFieldWeb extends StatefulWidget {
   });
 
   @override
-  State<LanguageDropDownFormFieldWeb> createState() =>
+  State<LanguageDropDown> createState() =>
       _LanguageDropDownFormFieldStateWeb();
 }
 
 class _LanguageDropDownFormFieldStateWeb
-    extends State<LanguageDropDownFormFieldWeb> {
+    extends State<LanguageDropDown> {
   LanguageType? selectedValue;
 
   @override
@@ -31,7 +31,7 @@ class _LanguageDropDownFormFieldStateWeb
         iconStyleData: const IconStyleData(
             icon: Visibility(
                 visible: false, child: Icon(Icons.keyboard_arrow_down)),
-            iconSize: 1,
+            iconSize: 10,
             iconEnabledColor: Colors.red,
             iconDisabledColor: Colors.black),
         decoration: const InputDecoration(

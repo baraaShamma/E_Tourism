@@ -4,7 +4,7 @@ class AppColor {
   static const  Color black = Color(0xFF000000);
   static const  Color white = Color(0xFFffffff);
   static const  Color grey = Color(0xFF766F69);
-  static const  Color primaryColorLight = Color(0xFF97BFE5);
+  static const  Color primaryColorLight = Color(0xFFAED1F8);
   static const  Color backgroundColorLight = Color(0xFFE2EEF8);
 
   static LinearGradient bottomNavigationBar=LinearGradient(

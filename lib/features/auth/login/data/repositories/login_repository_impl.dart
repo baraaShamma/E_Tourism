@@ -5,7 +5,7 @@ import 'package:e_tourism/core/network/network_info.dart';
 import 'package:e_tourism/features/auth/login/data/datasources/login_remote.dart';
 import 'package:e_tourism/features/auth/login/domain/entities/login.dart';
 import 'package:e_tourism/features/auth/login/domain/repositories/login_repository.dart';
-typedef LoginPost = Future<String> Function(); // تعديل الـ typedef ليعيد String بدلاً من Unit
+typedef LoginPost = Future<String> Function();
 
 class LoginRepositoryImpl implements LoginRepository {
   final LoginRemote loginRemote;
@@ -26,8 +26,8 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<Either<Failure, String>> _getMessage(LoginPost loginPost) async {
     if (await networkInfo.isConnected) {
       try {
-        final token = await loginPost(); // نحصل على الـ token
-        return Right(token); // نعيد الـ token بدلاً من unit
+        final token = await loginPost();
+        return Right(token);
       } on WrongDataFailureException {
         return Left(WrongDataFailure());
       } on ServerException {

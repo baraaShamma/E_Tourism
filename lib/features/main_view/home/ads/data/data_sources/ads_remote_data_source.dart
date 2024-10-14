@@ -1,4 +1,3 @@
-// ads_remote_data_source.dart
 
 import 'package:e_tourism/app/app_preferences.dart';
 import 'package:e_tourism/core/error/exceptions.dart';
@@ -14,19 +13,19 @@ abstract class AdsRemoteDataSource {
 
 class AdsRemoteDataSourceImpl implements AdsRemoteDataSource {
   final http.Client client;
-  final AppPreferences appPreferences; // إضافة AppPreferences
+  final AppPreferences appPreferences;
 
   AdsRemoteDataSourceImpl({required this.client, required this.appPreferences});
 
   @override
   Future<List<Ad>> fetchAds() async {
-    final token = appPreferences.getUserToken(); // الحصول على التوكن
+    final token = appPreferences.getUserToken();
 
     final response = await client.get(
       Uri.parse(AppLink.ADS_ENDPOINT),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token', // إرسال التوكن في الهيدر
+        'Authorization': 'Bearer $token',
       },
     );
 

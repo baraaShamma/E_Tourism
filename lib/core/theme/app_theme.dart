@@ -12,7 +12,7 @@ enum AppTheme {
 }
 
 final appThemeData = {
-  AppTheme.light:ThemeData(
+  AppTheme.light: ThemeData(
     textTheme: TextTheme(
       titleSmall: GoogleFonts.amiri(
         fontSize: 20,
@@ -29,33 +29,15 @@ final appThemeData = {
       headlineSmall: GoogleFonts.amiri(
         fontSize: 12,
         fontStyle: FontStyle.normal,
-
-        // shadows: [Shadow(blurRadius: 2)]
       ),
-        labelSmall:GoogleFonts.amiri(
-          fontSize: 12,
-          fontStyle: FontStyle.normal,
-
-          // shadows: [Shadow(blurRadius: 2)]
-        ),
+      labelSmall: GoogleFonts.amiri(
+        fontSize: 12,
+        fontStyle: FontStyle.normal,
+      ),
     ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Colors.white
-    ),
+    bottomNavigationBarTheme:
+        BottomNavigationBarThemeData(backgroundColor: Colors.white),
     primaryColor: AppColor.primaryColorLight,
-    // colorScheme: const ColorScheme(
-    //   secondary: AppColor.primaryColorLight,
-    //   brightness: Brightness.light,
-    //   background: AppColor.backgroundColorLight,
-    //   primary: AppColor.primaryColorLight,
-    //   error: Colors.white,
-    //   onBackground: Colors.red,
-    //   onError: Colors.white,
-    //   onPrimary: AppColor.primaryColorLight,
-    //   onSecondary: AppColor.primaryColorLight,
-    //   onSurface: AppColor.black,
-    //   surface: Colors.white,
-    // ),
     brightness: Brightness.light,
   ),
   AppTheme.dark: ThemeData(

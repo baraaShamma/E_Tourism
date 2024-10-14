@@ -36,7 +36,6 @@ class AppbarAppLogo extends AppBar {
           automaticallyImplyLeading: false,
           leadingWidth: leadingWidth ?? AppSizeW.s70,
           centerTitle: true,
-          // shadowColor: ColorManager.darkGrey,
           backgroundColor: backgroundColor,
           elevation: elevation,
           actions: [
@@ -50,7 +49,7 @@ class AppbarAppLogo extends AppBar {
                 height: AppSizeH.s62,
               ),
             ),
-            ...?actions
+
           ],
         );
 }

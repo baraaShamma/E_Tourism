@@ -11,7 +11,7 @@ class LogoAuthWidget extends StatelessWidget {
         radius: 80,
         backgroundColor: Colors.red,
         child: Padding(
-          padding: const EdgeInsets.all(0), // Border radius
+          padding: const EdgeInsets.all(0),
           child: ClipOval(
             child: Image.asset(
               AppImageAssets.logo,

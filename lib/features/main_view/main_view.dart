@@ -5,8 +5,8 @@ import 'package:e_tourism/core/constant/assets.dart';
 import 'package:e_tourism/core/constant/colors.dart';
 import 'package:e_tourism/core/constant/values_manager.dart';
 import 'package:e_tourism/features/main_view/home/home_screen.dart';
+import 'package:e_tourism/features/main_view/my_trips/presentation/pages/my_trips_screen.dart';
 import 'package:e_tourism/features/main_view/profile/profile_screen.dart';
-import 'package:e_tourism/features/main_view/trips/trips_screen.dart';
 import 'package:e_tourism/features/main_view/widget/app_bar_with_logo.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ import 'package:go_router/go_router.dart';
 class MainView extends StatefulWidget {
   final String? index;
 
-   MainView({super.key, this.index});
+  MainView({super.key, this.index});
 
   @override
   State<MainView> createState() => _MainViewState();
@@ -30,7 +30,7 @@ class _MainViewState extends State<MainView> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   List<Widget> pages = [
     const HomeScreen(),
-    const TripsScreen(),
+     MyTripsScreen(),
     const ProfileScreen(),
   ];
   List<Widget> unSelectedIcons = [
@@ -80,108 +80,106 @@ class _MainViewState extends State<MainView> {
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
-          key: scaffoldKey,
-        appBar: AppbarAppLogo(onPressedIcon: ()async{
-       await   appPreferences.logOutPref();
-          context.goNamed(RoutesNames.splash);
-
-        },
+        key: scaffoldKey,
+        appBar: AppbarAppLogo(
+          onPressedIcon: () async {
+            await appPreferences.logOutPref();
+            context.goNamed(RoutesNames.splash);
+          },
+          backgroundColor: Theme.of(context).primaryColor,
           title: Text(
             titles[currentIndex].tr(),
             style: Theme.of(context).textTheme.titleLarge,
           ),
-
         ),
-          body: pages[currentIndex],
-          extendBody: true,
-          bottomNavigationBar: ShaderMask(shaderCallback: (Rect bounds) {
+        body: pages[currentIndex],
+        extendBody: true,
+        bottomNavigationBar: ShaderMask(
+          shaderCallback: (Rect bounds) {
             return AppColor.bottomNavigationBar.createShader(bounds);
           },
-            child: Container(
-              height: AppSizeH.s56,
-              margin: EdgeInsets.symmetric(
-                  horizontal: AppSizeW.s15, vertical: AppSizeH.s24),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(48.r),
-                  border: Border.all(
-                      color: Theme.of(context).colorScheme.outline, width: 1),
-                  color:
-                      Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-                  shape: BoxShape.rectangle),
-              clipBehavior: Clip.none,
-              child: BottomNavigationBar(
-                selectedFontSize: 0,
-                unselectedFontSize: 0,
-                type: BottomNavigationBarType.shifting,
-                elevation: 0.0,
-                onTap: (value) {
-                  setState(() {
-                    lastIndex = currentIndex;
-                    currentIndex = value;
-                  });
-                },
-                showUnselectedLabels: false,
-                showSelectedLabels: false,
-                currentIndex: currentIndex,
-                items: List.generate(
-                    selectedIcons.length,
-                    (index) => BottomNavigationBarItem(
-                        icon: SizedBox(
-                            child: FittedBox(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              unSelectedIcons[index],
-                            ],
-                          ),
-                        )),
-                        tooltip: titles[index].tr(),
-                        backgroundColor: Colors.transparent,
-            
-                        label: '',
-                        activeIcon: SizedBox(
-                            height: AppSizeH.s40,
-                            // width: AppSizeW.s80,
-                            child: FittedBox(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    padding: REdgeInsets.all(AppSizeW.s12),
-                                    height: AppSizeH.s40,
-                                    // width: AppSizeW.s40,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Theme.of(context)
-                                            .primaryColor
-                                            .withOpacity(0.50)),
-                                    child: selectedIcons[index],
-                                  ),
-                                  SizedBox(
-                                    width: AppSizeW.s4,
-                                  ),
-                                  Visibility(
-                                      visible: currentIndex == index,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: AppSizeW.s2),
-                                        child: Text(
-                                          titles[index].tr(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall,
-                                        ),
-                                      ))
-                                ],
-                              ),
-                            )))),
-              ),
+          child: Container(
+            height: AppSizeH.s56,
+            margin: EdgeInsets.symmetric(
+                horizontal: AppSizeW.s15, vertical: AppSizeH.s24),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(48.r),
+                border: Border.all(
+                    color: Theme.of(context).colorScheme.outline, width: 1),
+                color:
+                    Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+                shape: BoxShape.rectangle),
+            clipBehavior: Clip.none,
+            child: BottomNavigationBar(
+              selectedFontSize: 0,
+              unselectedFontSize: 0,
+              type: BottomNavigationBarType.shifting,
+              elevation: 0.0,
+              onTap: (value) {
+                setState(() {
+                  lastIndex = currentIndex;
+                  currentIndex = value;
+                });
+              },
+              showUnselectedLabels: false,
+              showSelectedLabels: false,
+              currentIndex: currentIndex,
+              items: List.generate(
+                  selectedIcons.length,
+                  (index) => BottomNavigationBarItem(
+                      icon: SizedBox(
+                          child: FittedBox(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            unSelectedIcons[index],
+                          ],
+                        ),
+                      )),
+                      tooltip: titles[index].tr(),
+                      backgroundColor: Colors.transparent,
+                      label: '',
+                      activeIcon: SizedBox(
+                          height: AppSizeH.s40,
+                          child: FittedBox(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: REdgeInsets.all(AppSizeW.s12),
+                                  height: AppSizeH.s40,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.50)),
+                                  child: selectedIcons[index],
+                                ),
+                                SizedBox(
+                                  width: AppSizeW.s4,
+                                ),
+                                Visibility(
+                                    visible: currentIndex == index,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: AppSizeW.s2),
+                                      child: Text(
+                                        titles[index].tr(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall,
+                                      ),
+                                    ))
+                              ],
+                            ),
+                          )))),
             ),
           ),
+        ),
       ),
     );
   }
