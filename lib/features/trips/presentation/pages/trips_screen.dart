@@ -1,5 +1,6 @@
 import 'package:e_tourism/features/trips/presentation/bloc/trips_bloc.dart';
 import 'package:e_tourism/features/trips/presentation/widgets/list_trips_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +11,7 @@ class TripsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('الرحلات المتوفرة'),
+        title: Text('58'.tr()),
       ),
       body: BlocListener<TripsBloc, TripsState>(
           listener: (context, state) {
@@ -30,7 +31,8 @@ class TripsScreen extends StatelessWidget {
             builder: (context, state) {
               if (state is TripsLoading) {
                 return Center(child: CircularProgressIndicator());
-              } else if (state is TripsLoaded) {
+              }
+              else if (state is TripsLoaded) {
                 final trips = state.trips;
                 if (trips.isEmpty) {
                   return Center(child: Text('No trips available.'));
@@ -58,17 +60,17 @@ class TripsScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text('تأكيد الاشتراك'),
-          content: Text('هل أنت متأكد أنك تريد الاشتراك في الرحلة؟'),
+          title: Text('47'.tr()),
+          content: Text('48'.tr()),
           actions: [
             TextButton(
-              child: Text('إلغاء'),
+              child: Text('49'.tr()),
               onPressed: () {
                 context.pop();
               },
             ),
             TextButton(
-              child: Text('تأكيد'),
+              child: Text('50'.tr()),
               onPressed: () {
                 BlocProvider.of<TripsBloc>(context)
                     .add(RegisterForTripEvent(tripId: tripId));

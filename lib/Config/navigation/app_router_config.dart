@@ -5,6 +5,9 @@ import 'package:e_tourism/features/main_view/home/tourist_programs/presentation/
 import 'package:e_tourism/features/main_view/home/tourist_programs/presentation/pages/tourist_programs_detail_screen.dart';
 import 'package:e_tourism/features/main_view/home/tourist_programs/presentation/pages/tourist_programs_screen.dart';
 import 'package:e_tourism/features/main_view/main_view.dart';
+import 'package:e_tourism/features/search/presentation/bloc/search_bloc.dart';
+import 'package:e_tourism/features/search/presentation/pages/search_by_dates_screen.dart';
+import 'package:e_tourism/features/search/presentation/pages/search_by_name_screen.dart';
 import 'package:e_tourism/features/splash/presentation/pages/splash_page.dart';
 import 'package:e_tourism/features/trips/presentation/bloc/trips_bloc.dart';
 import 'package:e_tourism/features/trips/presentation/pages/trips_screen.dart';
@@ -87,5 +90,30 @@ class AppRouterConfig {
             );
           },
         ),
+        GoRoute(
+            path: '/searchByName',
+            builder: (context, state) {
+              return BlocProvider(
+                create: (_) => di.instance<SearchBloc>(),
+                child: SearchByNameScreen(),
+              );
+            }
+            // => SearchByNameScreen(),
+            ),
+        GoRoute(
+            path: '/searchByDates',
+            builder: (context, state) {
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (_) => di.instance<SearchBloc>(),
+                  ),
+                  BlocProvider(
+                    create: (_) => di.instance<TripsBloc>()
+                  ),
+                ],
+                child:  SearchByDatesScreen(),
+              );
+            }),
       ]);
 }

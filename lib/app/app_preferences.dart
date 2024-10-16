@@ -32,10 +32,14 @@ class AppPreferences {
   }
   Future<void> setUserToken(String token) async {
     _sharedPreferences.setString(PREFS_KEY_TOKEN, token);
+  }  Future<void> setUserType(String typeUser) async {
+    _sharedPreferences.setString(PREFS_KEY_User_Type, typeUser);
   }
 
   String getUserToken() {
     return _sharedPreferences.getString(PREFS_KEY_TOKEN) ?? '';
+  }  String getTypeUser() {
+    return _sharedPreferences.getString(PREFS_KEY_User_Type) ?? '';
   }
 
   Future<Locale> switchAppLanguage(LanguageType languageType) async {

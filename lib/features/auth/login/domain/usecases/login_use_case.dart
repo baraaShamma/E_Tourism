@@ -9,7 +9,7 @@ class LoginUseCase {
 
   LoginUseCase(this.repository);
 
-  Future<Either<Failure, String>> call(Login login) async {
+  Future<Either<Failure, Map<String, String>>> call(Login login) async {
     return await repository.login(login);
   }
 }

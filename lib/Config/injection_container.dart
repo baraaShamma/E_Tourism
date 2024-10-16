@@ -13,6 +13,13 @@ import 'package:e_tourism/features/main_view/my_trips/data/repositories/my_trip_
 import 'package:e_tourism/features/main_view/my_trips/domain/repositories/my_trip_repository.dart';
 import 'package:e_tourism/features/main_view/my_trips/domain/use_cases/get_registered_trips_use_case.dart';
 import 'package:e_tourism/features/main_view/my_trips/presentation/bloc/my_trips_bloc.dart';
+import 'package:e_tourism/features/search/data/data_sources/search_trips_remote_data_source.dart';
+import 'package:e_tourism/features/search/data/repositories/search_trips_repository_impl.dart';
+import 'package:e_tourism/features/search/domain/repositories/search_trips_repository.dart';
+import 'package:e_tourism/features/search/domain/use_cases/register_for_trip_search_use_case.dart';
+import 'package:e_tourism/features/search/domain/use_cases/search_trips_by_dates.dart';
+import 'package:e_tourism/features/search/domain/use_cases/search_trips_by_name.dart';
+import 'package:e_tourism/features/search/presentation/bloc/search_bloc.dart';
 import 'package:e_tourism/features/trips/data/data_sources/trips_remote_data_source.dart';
 import 'package:e_tourism/features/trips/data/repositories/trips_repository_impl.dart';
 import 'package:e_tourism/features/trips/domain/repositories/trips_repository.dart';
@@ -54,7 +61,8 @@ Future<void> init() async {
       getTouristProgramByIdUseCase: instance()));
 
   instance.registerFactory(() => LoginBloc(loginUseCase: instance()));
-  instance.registerFactory(() => MyTripsBloc(getRegisteredTripsUseCase: instance()));
+  instance.registerFactory(
+      () => MyTripsBloc(getRegisteredTripsUseCase: instance()));
   instance.registerFactory(() => AdsBloc(getAdsUseCase: instance()));
 
 // DataSources
@@ -74,6 +82,27 @@ Future<void> init() async {
   instance.registerLazySingleton<MyTripRemoteDataSource>(() =>
       MyTripRemoteDataSourceImpl(
           client: instance(), appPreferences: instance()));
+
+  //===========search========================
+  instance.registerLazySingleton<SearchTripsRemoteDataSource>(() =>
+      SearchTripsRemoteDataSource(
+          client: instance(), appPreferences: instance()));
+
+  instance.registerLazySingleton<SearchTripsRepository>(
+    () => SearchTripsRepositoryImpl(instance()),
+  );
+  instance.registerLazySingleton(() => SearchTripsByName(instance()));
+  instance.registerLazySingleton(() => SearchTripsByDates(instance()));
+  instance.registerLazySingleton(() => RegisterForTripSearchUseCase(instance()));
+  instance.registerFactory(
+    () => SearchBloc(
+      searchByName: instance(),
+      searchByDates: instance(),
+      registerForTripUseCase: instance()
+    ),
+  );
+
+  //====================
 // Usecases
 
   instance.registerLazySingleton(() => LoginUseCase(instance()));
@@ -81,12 +110,13 @@ Future<void> init() async {
   instance.registerLazySingleton(() => GetTouristProgramsUseCases(instance()));
   instance
       .registerLazySingleton(() => GetTouristProgramByIdUseCase(instance()));
-  instance.registerLazySingleton(() => GetRegisteredTripsUseCase(repository: instance()));
+  instance.registerLazySingleton(
+      () => GetRegisteredTripsUseCase(repository: instance()));
 
 // Repository
 
   instance.registerLazySingleton<LoginRepository>(() =>
-      LoginRepositoryImpl(loginRemote: instance(), networkInfo: instance()));
+      LoginRepositoryImpl(remoteDataSource: instance()));
   instance.registerLazySingleton<TouristProgramsRepository>(() =>
       TouristProgramsRepositoryImpl(
           remoteDataSource: instance(), networkInfo: instance()));

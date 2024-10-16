@@ -16,27 +16,24 @@ class LanguageDropDown extends StatefulWidget {
   });
 
   @override
-  State<LanguageDropDown> createState() =>
-      _LanguageDropDownFormFieldStateWeb();
+  State<LanguageDropDown> createState() => _LanguageDropDownFormFieldStateWeb();
 }
 
-class _LanguageDropDownFormFieldStateWeb
-    extends State<LanguageDropDown> {
+class _LanguageDropDownFormFieldStateWeb extends State<LanguageDropDown> {
   LanguageType? selectedValue;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: DropdownButtonFormField2<LanguageType>(
-        iconStyleData: const IconStyleData(
-            icon: Visibility(
-                visible: false, child: Icon(Icons.keyboard_arrow_down)),
-            iconSize: 10,
-            iconEnabledColor: Colors.red,
-            iconDisabledColor: Colors.black),
-        decoration: const InputDecoration(
-          isDense: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        decoration: InputDecoration(
+          // Add Horizontal padding using menuItemStyleData.padding so it matches
+          // the menu padding when button's width is not specified.
+          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          // Add more decoration..
         ),
         isExpanded: true,
         hint: Text(
@@ -59,15 +56,6 @@ class _LanguageDropDownFormFieldStateWeb
           });
           widget.onChanged(value as LanguageType);
         },
-        buttonStyleData: const ButtonStyleData(
-          // height: AppSizeH.s48,
-          height: 48,
-        ),
-        dropdownStyleData: DropdownStyleData(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
       ),
     );
   }

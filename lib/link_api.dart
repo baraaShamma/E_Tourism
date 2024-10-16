@@ -6,5 +6,6 @@ class AppLink {
   static String ADS_ENDPOINT = "$baseUrl/ads";
   static String touristPrograms = "$baseUrl/tourist-programs";
   static String getRegisteredTrips = "$baseUrl/trips/registered";
+  static String trips = "$baseUrl/trips";
 
 }

@@ -4,10 +4,12 @@ import 'package:e_tourism/app/app_preferences.dart';
 import 'package:e_tourism/core/constant/assets.dart';
 import 'package:e_tourism/core/constant/colors.dart';
 import 'package:e_tourism/core/constant/values_manager.dart';
+import 'package:e_tourism/features/add_for_admin/presentation/pages/add_for_admin_screen.dart';
 import 'package:e_tourism/features/main_view/home/home_screen.dart';
 import 'package:e_tourism/features/main_view/my_trips/presentation/pages/my_trips_screen.dart';
 import 'package:e_tourism/features/main_view/profile/profile_screen.dart';
 import 'package:e_tourism/features/main_view/widget/app_bar_with_logo.dart';
+import 'package:e_tourism/features/search/presentation/widgets/search_options_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,8 +32,13 @@ class _MainViewState extends State<MainView> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   List<Widget> pages = [
     const HomeScreen(),
-     MyTripsScreen(),
-    const ProfileScreen(),
+    MyTripsScreen(),
+    ProfileScreen(),
+  ];
+  List<Widget> pagesAdmin = [
+    const HomeScreen(),
+    const AddForAdminScreen(),
+    ProfileScreen(),
   ];
   List<Widget> unSelectedIcons = [
     SvgPicture.asset(
@@ -83,8 +90,12 @@ class _MainViewState extends State<MainView> {
         key: scaffoldKey,
         appBar: AppbarAppLogo(
           onPressedIcon: () async {
-            await appPreferences.logOutPref();
-            context.goNamed(RoutesNames.splash);
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const SearchOptionsDialog();
+              },
+            );
           },
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
@@ -92,7 +103,9 @@ class _MainViewState extends State<MainView> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
-        body: pages[currentIndex],
+        body: appPreferences.getTypeUser() == 'admin'
+            ? pagesAdmin[currentIndex]
+            : pages[currentIndex],
         extendBody: true,
         bottomNavigationBar: ShaderMask(
           shaderCallback: (Rect bounds) {

@@ -23,7 +23,15 @@ class ErrorLoginState extends LoginState {
 class SuccessLoginState extends LoginState {
   final String message;
   final String token;
+  final String typeUser;
 
-  SuccessLoginState({required this.message, required this.token});
+  SuccessLoginState({
+    required this.message,
+    required this.token,
+    required this.typeUser,
+  });
+
+  @override
+  List<Object> get props => [message, token, typeUser];
 }
 

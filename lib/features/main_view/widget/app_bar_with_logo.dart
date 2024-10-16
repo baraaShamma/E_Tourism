@@ -28,7 +28,7 @@ class AppbarAppLogo extends AppBar {
               children: [
                 InkWell(
                     onTap:onPressedIcon,
-                    child: Icon(Icons.logout, color: AppColor.black)),
+                    child: Icon(Icons.search, color: AppColor.black)),
               ],
             ),
           ),

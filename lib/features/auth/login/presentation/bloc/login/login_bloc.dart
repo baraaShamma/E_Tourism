@@ -23,30 +23,33 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (event is ClickButtonLoginEvent) {
         emit(LoadingLoginState());
 
-        final failureOrToken = await loginUseCase(event.login);
+        final failureOrLoginData = await loginUseCase(event.login);
         emit(
-          _eitherDoneMessageOrErrorState(failureOrToken),
+          _eitherDoneMessageOrErrorState(failureOrLoginData),
         );
       }
     });
   }
 
-  LoginState _eitherDoneMessageOrErrorState(Either<Failure, String> either) {
+  LoginState _eitherDoneMessageOrErrorState(
+      Either<Failure, Map<String, String>> either) {
     return either.fold(
-      (failure) => ErrorLoginState(
-        message: _mapFailureToMessage(failure),
-      ),
-      (token) {
-        appPreferences.setUserLoggedIn();
-        appPreferences.setUserToken(token);
+        (failure) => ErrorLoginState(
+              message: _mapFailureToMessage(failure),
+            ), (loginData) {
+      final token = loginData['token']!;
+      final typeUser = loginData['type_user']!;
 
+      appPreferences.setUserLoggedIn();
+      appPreferences.setUserToken(token);
+      appPreferences.setUserType(typeUser);
 
-        return SuccessLoginState(
-          message: "Login Successful, Token: ",
-          token: token,
-        );
-      }
-    );
+      return SuccessLoginState(
+        message: "Login Successful,",
+        token: token,
+        typeUser: typeUser,
+      );
+    });
   }
 
   String _mapFailureToMessage(Failure failure) {
@@ -58,7 +61,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       case WrongDataFailure:
         return Error_FAILURE_MESSAGE;
       default:
-        return "Unexpected Error,Please try again later .";
+        return "Unexpected Error, Please try again later.";
     }
   }
 }

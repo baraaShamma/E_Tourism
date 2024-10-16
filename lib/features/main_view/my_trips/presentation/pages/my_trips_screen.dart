@@ -3,6 +3,7 @@ import 'package:e_tourism/Config/injection_container.dart';
 import 'package:e_tourism/features/main_view/my_trips/domain/entities/my_trip.dart';
 import 'package:e_tourism/features/main_view/my_trips/presentation/bloc/my_trips_bloc.dart';
 import 'package:e_tourism/link_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,14 +55,14 @@ class TripCard extends StatelessWidget {
             }).toList(),
           ),
           ListTile(
-            title: Text(trip.name),
+            title: Text("63".tr()+trip.name),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(trip.description),
-                Text('Guide: ${trip.guide.fName} ${trip.guide.lName}'),
-                Text('Bus Type: ${trip.busType}'),
-                Text('Trip Date: ${trip.tripDate}'),
+                Text("${"64".tr()} ${trip.description}"),
+                Text("${"60".tr()} ${trip.guide.fName} ${trip.guide.lName}"),
+                Text("${"61".tr()} ${trip.busType}"),
+                Text("${"62".tr()} ${trip.tripDate}")
               ],
             ),
           ),

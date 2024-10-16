@@ -6,6 +6,7 @@ import 'package:e_tourism/link_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class TouristProgramsDetailScreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class TouristProgramsDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tourist Program Details'),
+        title: Text('59'.tr()),
       ),
       body: BlocBuilder<TouristProgramsBloc, TouristProgramsState>(
         builder: (context, state) {
@@ -59,14 +60,25 @@ class TouristProgramsDetailScreen extends StatelessWidget {
                     Text(program.description),
                     const SizedBox(height: 20),
                     program.hasTrips == 1
-                        ? InkWell(
-                            onTap: () {
-                              context.push(
-                                  '${RoutesPaths.tripsScreen}/${program.id}');
-                            },
-                            child: Text("31".tr()),
+                        ? Container(
+                            height: AppSizeH.s50,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(48.r),
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                context.push(
+                                    '${RoutesPaths.tripsScreen}/${program.id}');
+                              },
+                              child: Text("31".tr()),
+                            ),
                           )
-                        : Text("32".tr())
+                        : Text("32".tr()),
+                    SizedBox(
+                      height: 20,
+                    )
                   ],
                 ),
               ],
