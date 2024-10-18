@@ -1,5 +1,6 @@
 import 'package:e_tourism/Config/navigation/app_route.dart';
 import 'package:e_tourism/core/constant/values_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,7 +23,7 @@ class AddForAdminScreen extends StatelessWidget {
                   const SizedBox(
                     width: 20,
                   ),
-                  Text("البرامج السياحية",
+                  Text("25".tr(),
                       style: TextStyle(
                           color: Colors.black, fontSize: AppSizeSp.s20)),
                 ],
@@ -42,7 +43,7 @@ class AddForAdminScreen extends StatelessWidget {
                   const SizedBox(
                     width: 20,
                   ),
-                  Text("الحافلات",
+                  Text("75".tr(),
                       style: TextStyle(
                           color: Colors.black, fontSize: AppSizeSp.s20)),
                 ],
@@ -62,7 +63,7 @@ class AddForAdminScreen extends StatelessWidget {
                   const SizedBox(
                     width: 20,
                   ),
-                  Text("المرشدين السياحين",
+                  Text("85".tr(),
                       style: TextStyle(
                           color: Colors.black, fontSize: AppSizeSp.s20)),
                 ],
@@ -82,7 +83,7 @@ class AddForAdminScreen extends StatelessWidget {
                   const SizedBox(
                     width: 20,
                   ),
-                  Text("الرحلات",
+                  Text("33".tr(),
                       style: TextStyle(
                           color: Colors.black, fontSize: AppSizeSp.s20)),
                 ],
@@ -90,6 +91,27 @@ class AddForAdminScreen extends StatelessWidget {
             ),
             onTap: () async {
               context.push(RoutesPaths.adminTripsScreen,);
+
+            },
+          ),
+          InkWell(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppSizeW.s22, vertical: AppSizeH.s20),
+              child: Row(
+                children: [
+                  Icon(Icons.ads_click_sharp, color: Colors.blue, size: AppSizeH.s25),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text("111".tr(),
+                      style: TextStyle(
+                          color: Colors.black, fontSize: AppSizeSp.s20)),
+                ],
+              ),
+            ),
+            onTap: () async {
+              context.push(RoutesPaths.adminAdsScreen,);
 
             },
           ),

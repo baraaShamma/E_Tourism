@@ -1,6 +1,21 @@
 import 'package:e_tourism/Config/navigation/app_router_config.dart';
 import 'package:e_tourism/core/network/network_info.dart';
 import 'package:e_tourism/core/theme/bloc/theme_bloc.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/data/data_sources/admin_trip_remote_data_source.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/data/repositories/admin_trip_repository_impl.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/domain/repositories/admin_trip_repository.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/domain/use_cases/add_trip_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/domain/use_cases/get_buses_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/domain/use_cases/get_guides_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/domain/use_cases/get_tourist_programs_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/presentation/bloc/admin_add_trip_bloc.dart';
+import 'package:e_tourism/features/add_for_admin/ads/data/data_sources/admin_ads_data_source.dart';
+import 'package:e_tourism/features/add_for_admin/ads/data/repositories/admin_ads_repository.dart';
+import 'package:e_tourism/features/add_for_admin/ads/domain/repositories/admin_ads_repository_imp.dart';
+import 'package:e_tourism/features/add_for_admin/ads/domain/use_cases/add_ad_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/ads/domain/use_cases/delete_ad_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/ads/domain/use_cases/get_ads_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/ads/presentation/bloc/admin_ads_bloc.dart';
 import 'package:e_tourism/features/add_for_admin/buss_admin/data/data_sources/buss_admin_remote_data_source.dart';
 import 'package:e_tourism/features/add_for_admin/buss_admin/data/repositories/buss_admin_repository_impl.dart';
 import 'package:e_tourism/features/add_for_admin/buss_admin/domain/repositories/buss_admin_repository.dart';
@@ -96,7 +111,7 @@ Future<void> init() async {
       getTouristProgramByIdUseCase: instance()));
 
   instance.registerFactory(() => LoginBloc(loginUseCase: instance()));
-  instance.registerFactory(() =>SignUpBloc(signUpUseCase: instance()));
+  instance.registerFactory(() => SignUpBloc(signUpUseCase: instance()));
   instance.registerFactory(
       () => MyTripsBloc(getRegisteredTripsUseCase: instance()));
   instance.registerFactory(() => AdsBloc(getAdsUseCase: instance()));
@@ -212,7 +227,11 @@ Future<void> init() async {
     () => GuidesAdminRemoteDataSource(
         client: instance(), appPreferences: instance()),
   );
-
+  instance.registerLazySingleton<AdminAddTripRemoteDataSource>(() =>
+      AdminAddTripRemoteDataSourceImpl(
+          client: instance(), appPreferences: instance()));
+  instance.registerLazySingleton<AdminAdsDataSource>(() =>
+      AdminAdsDataSourceImpl(client: instance(), appPreferences: instance()));
   // Repositories
   instance.registerLazySingleton<TouristProgramsAdminRepository>(
     () => TouristProgramsAdminRepositoryImpl(instance()),
@@ -223,7 +242,10 @@ Future<void> init() async {
   instance.registerLazySingleton<GuidesAdminRepository>(
     () => GuidesAdminRepositoryImpl(instance()),
   );
-
+  instance.registerLazySingleton<AdminAddTripRepository>(
+      () => AdminAddTripRepositoryImpl(instance()));
+  instance.registerLazySingleton<AdminAdsRepository>(
+      () => AdminAdsRepositoryImpl(instance()));
   // Use Cases
   instance.registerLazySingleton<AddTouristProgramUseCase>(
     () => AddTouristProgramUseCase(instance()),
@@ -262,6 +284,21 @@ Future<void> init() async {
   instance.registerLazySingleton<GetGuidesUseCase>(
     () => GetGuidesUseCase(instance()),
   );
+  //======================
+  instance
+      .registerLazySingleton<AddTripUseCase>(() => AddTripUseCase(instance()));
+  instance.registerLazySingleton<GetBusesUseCase>(
+      () => GetBusesUseCase(instance()));
+  instance.registerLazySingleton<GetAdminGuidesUseCase>(
+      () => GetAdminGuidesUseCase(instance()));
+  instance.registerLazySingleton<GetAdminTouristProgramsUseCase>(
+      () => GetAdminTouristProgramsUseCase(instance()));
+//=========================
+  instance.registerLazySingleton<AddAdUseCase>(() => AddAdUseCase(instance()));
+  instance.registerLazySingleton<DeleteAdUseCase>(
+      () => DeleteAdUseCase(instance()));
+  instance.registerLazySingleton<GetAdsAdminUseCase>(
+      () => GetAdsAdminUseCase(instance()));
   // Bloc
   instance.registerFactory<TouristProgramsAdminBloc>(
     () => TouristProgramsAdminBloc(
@@ -288,10 +325,20 @@ Future<void> init() async {
     ),
   );
   instance.registerFactory(() => AdminTripsBloc(
-    getTripsUseCase: instance(),
-    deleteTripUseCase: instance(),
-    uploadTripImageUseCase: instance(),
-  ));
+        getTripsUseCase: instance(),
+        deleteTripUseCase: instance(),
+        uploadTripImageUseCase: instance(),
+      ));
+  instance.registerFactory<AdminAddTripBloc>(() => AdminAddTripBloc(
+        addTripUseCase: instance(),
+        getBusesUseCase: instance(),
+        getGuidesUseCase: instance(),
+        getTouristProgramsUseCase: instance(),
+      ));
+  instance.registerFactory(() => AdminAdsBloc(
+      addAdUseCase: instance(),
+      deleteAdUseCase: instance(),
+      getAdsUseCase: instance()));
 
   // UseCases
   instance.registerLazySingleton(() => AdminGetTripsUseCase(instance()));
@@ -299,13 +346,14 @@ Future<void> init() async {
   instance.registerLazySingleton(() => UploadTripImageUseCase(instance()));
 
   // Repository
-  instance.registerLazySingleton<AdminTripRepository>(() => AdminTripRepositoryImpl(
-    remoteDataSource: instance(),
-  ));
+  instance
+      .registerLazySingleton<AdminTripRepository>(() => AdminTripRepositoryImpl(
+            remoteDataSource: instance(),
+          ));
 
   // Data sources
   instance.registerLazySingleton<AdminTripRemoteDataSource>(
-        () => AdminTripRemoteDataSourceImpl(client: instance(),appPreferences: instance()),
+    () => AdminTripRemoteDataSourceImpl(
+        client: instance(), appPreferences: instance()),
   );
-
 }

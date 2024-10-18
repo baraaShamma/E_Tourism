@@ -46,7 +46,7 @@ class AdminTripRemoteDataSourceImpl implements AdminTripRemoteDataSource {
     final token = appPreferences.getUserToken();
 
     final response = await client.delete(
-      Uri.parse('${AppLink.trips}/$id'),
+      Uri.parse('${AppLink.tripsAdmin}/$id'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -62,7 +62,7 @@ class AdminTripRemoteDataSourceImpl implements AdminTripRemoteDataSource {
   Future<void> uploadTripImage(String tripId, File image) async {
     final token = appPreferences.getUserToken();
 
-    final uri = Uri.parse('${AppLink.trips}/images');
+    final uri = Uri.parse('${AppLink.tripsAdmin}/images');
     final request = http.MultipartRequest('POST', uri)
       ..fields['tourist_trip_id'] = tripId
       ..files.add(await http.MultipartFile.fromPath(

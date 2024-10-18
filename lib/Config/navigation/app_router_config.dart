@@ -1,4 +1,8 @@
 import 'package:e_tourism/Config/navigation/app_route.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/presentation/bloc/admin_add_trip_bloc.dart';
+import 'package:e_tourism/features/add_for_admin/add_trip/presentation/pages/AddTripPage.dart';
+import 'package:e_tourism/features/add_for_admin/ads/presentation/bloc/admin_ads_bloc.dart';
+import 'package:e_tourism/features/add_for_admin/ads/presentation/pages/admin_ads_screen.dart';
 import 'package:e_tourism/features/add_for_admin/buss_admin/presentation/bloc/buss_admin_bloc.dart';
 import 'package:e_tourism/features/add_for_admin/buss_admin/presentation/pages/admin_buss_screen.dart';
 import 'package:e_tourism/features/add_for_admin/guide_admin/presentation/bloc/guides_admin_bloc.dart';
@@ -159,7 +163,8 @@ class AppRouterConfig {
             ],
             child: const AdminGuidesScreen(),
           ),
-        ),       GoRoute(
+        ),
+        GoRoute(
           path: RoutesPaths.adminTripsScreen,
           name: RoutesNames.adminTripsScreen,
           builder: (context, state) => MultiBlocProvider(
@@ -169,6 +174,29 @@ class AppRouterConfig {
                       di.instance<AdminTripsBloc>()..add(LoadTripsEvent())),
             ],
             child: const TripsAdminScreen(),
+          ),
+        ),
+        GoRoute(
+          path: RoutesPaths.adminAddTripsScreen,
+          name: RoutesNames.adminAddTripsScreen,
+          builder: (context, state) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (_) => di.instance<AdminAddTripBloc>()
+                    ..add(LoadAdminTripData())),
+            ],
+            child: AddTripPage(),
+          ),
+        ),
+        GoRoute(
+          path: RoutesPaths.adminAdsScreen,
+          name: RoutesNames.adminAdsScreen,
+          builder: (context, state) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (_) => di.instance<AdminAdsBloc>()..add(LoadAds())),
+            ],
+            child: const AdminAdsScreen(),
           ),
         ),
       ]);

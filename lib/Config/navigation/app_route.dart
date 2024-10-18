@@ -12,6 +12,8 @@ class RoutesNames{
   static const String adminBussScreen = 'adminBussScreen';
   static const String adminGuidesScreen = 'adminGuidesScreen';
   static const String adminTripsScreen = 'adminTripsScreen';
+  static const String adminAddTripsScreen = 'adminAddTripsScreen';
+  static const String adminAdsScreen = 'adminAdsScreen';
 
 }
 
@@ -28,6 +30,8 @@ class RoutesPaths{
   static const String adminBussScreen = '/adminBussScreen';
   static const String adminGuidesScreen = '/adminGuidesScreen';
   static const String adminTripsScreen = '/adminTripsScreen';
+  static const String adminAddTripsScreen = '/adminAddTripsScreen';
+  static const String adminAdsScreen = '/adminAdsScreen';
 
 
 }

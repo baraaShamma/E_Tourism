@@ -1,9 +1,11 @@
+import 'package:e_tourism/Config/navigation/app_route.dart';
 import 'package:e_tourism/core/util/snackbar_message.dart';
 import 'package:e_tourism/features/add_for_admin/trips_admin/presentation/bloc/admin_trips_bloc.dart';
 import 'package:e_tourism/features/add_for_admin/trips_admin/presentation/widgets/trip_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:intl/intl.dart';
 
@@ -77,7 +79,8 @@ class _TripsAdminScreenState extends State<TripsAdminScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigate to add trip screen
+
+          context.pushNamed(RoutesNames.adminAddTripsScreen);
         },
         child: const Icon(Icons.add),
       ),

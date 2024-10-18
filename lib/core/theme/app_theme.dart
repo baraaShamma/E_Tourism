@@ -23,7 +23,7 @@ final appThemeData = {
         fontStyle: FontStyle.italic,
       ),
       bodyMedium: GoogleFonts.amiri(
-        fontSize: 20,
+        fontSize: 18,
         fontStyle: FontStyle.italic,
       ),
       headlineSmall: GoogleFonts.amiri(
