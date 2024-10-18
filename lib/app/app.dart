@@ -1,5 +1,6 @@
 import 'package:e_tourism/Config/navigation/app_router_config.dart';
 import 'package:e_tourism/core/theme/bloc/theme_bloc.dart';
+import 'package:e_tourism/features/auth/signup/presentation/bloc/signUp_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
             child: MultiBlocProvider(
               providers: [
                 BlocProvider(create: (_) => di.instance<LoginBloc>()),
+                BlocProvider(create: (_) => di.instance<SignUpBloc>()),
 
                 BlocProvider(
                     create: (_) =>
@@ -56,6 +58,5 @@ class MyApp extends StatelessWidget {
             ));
       }),
     );
-    ;
   }
 }

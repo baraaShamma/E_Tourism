@@ -14,7 +14,6 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<Either<Failure, Map<String, String>>> login(Login login) async {
     try {
       final loginData = await remoteDataSource.login(login.email, login.password);
-
       return Right(loginData);
     } on WrongDataFailureException {
       return Left(WrongDataFailure());

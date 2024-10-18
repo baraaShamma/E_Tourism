@@ -1,6 +1,41 @@
 import 'package:e_tourism/Config/navigation/app_router_config.dart';
 import 'package:e_tourism/core/network/network_info.dart';
 import 'package:e_tourism/core/theme/bloc/theme_bloc.dart';
+import 'package:e_tourism/features/add_for_admin/buss_admin/data/data_sources/buss_admin_remote_data_source.dart';
+import 'package:e_tourism/features/add_for_admin/buss_admin/data/repositories/buss_admin_repository_impl.dart';
+import 'package:e_tourism/features/add_for_admin/buss_admin/domain/repositories/buss_admin_repository.dart';
+import 'package:e_tourism/features/add_for_admin/buss_admin/domain/use_cases/add_bus_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/buss_admin/domain/use_cases/delete_bus_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/buss_admin/domain/use_cases/get_buss_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/buss_admin/domain/use_cases/update_bus_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/buss_admin/presentation/bloc/buss_admin_bloc.dart';
+import 'package:e_tourism/features/add_for_admin/guide_admin/data/data_sources/guide_admin_remote_data_source.dart';
+import 'package:e_tourism/features/add_for_admin/guide_admin/data/repositories/guide_admin_repository_impl.dart';
+import 'package:e_tourism/features/add_for_admin/guide_admin/domain/repositories/guide_admin_repository.dart';
+import 'package:e_tourism/features/add_for_admin/guide_admin/domain/use_cases/add_bus_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/guide_admin/domain/use_cases/delete_guide_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/guide_admin/domain/use_cases/get_guide_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/guide_admin/presentation/bloc/guides_admin_bloc.dart';
+import 'package:e_tourism/features/add_for_admin/tourist_programs_admin/data/data_sources/tourist_programs_admin_remote_data_source.dart';
+import 'package:e_tourism/features/add_for_admin/tourist_programs_admin/data/repositories/tourist_programs_admin_repository_impl.dart';
+import 'package:e_tourism/features/add_for_admin/tourist_programs_admin/domain/repositories/tourist_programs_admin_repository.dart';
+import 'package:e_tourism/features/add_for_admin/tourist_programs_admin/domain/use_cases/add_tourist_program_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/tourist_programs_admin/domain/use_cases/delete_tourist_program_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/tourist_programs_admin/domain/use_cases/get_tourist_programs_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/tourist_programs_admin/domain/use_cases/update_tourist_program_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/tourist_programs_admin/presentation/bloc/tourist_programs_admin__bloc.dart';
+import 'package:e_tourism/features/add_for_admin/trips_admin/data/data_sources/admin_trip_remote_data_source.dart';
+import 'package:e_tourism/features/add_for_admin/trips_admin/data/repositories/admin_trip_repository_impl.dart';
+import 'package:e_tourism/features/add_for_admin/trips_admin/domain/repositories/admin_trip_repository.dart';
+import 'package:e_tourism/features/add_for_admin/trips_admin/domain/use_cases/admin_get_trips_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/trips_admin/domain/use_cases/delete_trip_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/trips_admin/domain/use_cases/upload_trip_image_use_case.dart';
+import 'package:e_tourism/features/add_for_admin/trips_admin/presentation/bloc/admin_trips_bloc.dart';
+import 'package:e_tourism/features/auth/signup/data/data_sources/signup_remote.dart';
+import 'package:e_tourism/features/auth/signup/data/repositories/signup_repository_impl.dart';
+import 'package:e_tourism/features/auth/signup/domain/repositories/signup_repository.dart';
+import 'package:e_tourism/features/auth/signup/domain/use_cases/signup_use_case.dart';
+import 'package:e_tourism/features/auth/signup/presentation/bloc/signUp_bloc.dart';
 import 'package:e_tourism/features/main_view/home/ads/domain/use_cases/get_ads_use_case.dart';
 import 'package:e_tourism/features/main_view/home/ads/presentation/bloc/ads_bloc.dart';
 import 'package:e_tourism/features/main_view/home/tourist_programs/data/data_sources/tourist_programs_remote_data_source.dart';
@@ -61,6 +96,7 @@ Future<void> init() async {
       getTouristProgramByIdUseCase: instance()));
 
   instance.registerFactory(() => LoginBloc(loginUseCase: instance()));
+  instance.registerFactory(() =>SignUpBloc(signUpUseCase: instance()));
   instance.registerFactory(
       () => MyTripsBloc(getRegisteredTripsUseCase: instance()));
   instance.registerFactory(() => AdsBloc(getAdsUseCase: instance()));
@@ -93,19 +129,20 @@ Future<void> init() async {
   );
   instance.registerLazySingleton(() => SearchTripsByName(instance()));
   instance.registerLazySingleton(() => SearchTripsByDates(instance()));
-  instance.registerLazySingleton(() => RegisterForTripSearchUseCase(instance()));
+  instance
+      .registerLazySingleton(() => RegisterForTripSearchUseCase(instance()));
   instance.registerFactory(
     () => SearchBloc(
-      searchByName: instance(),
-      searchByDates: instance(),
-      registerForTripUseCase: instance()
-    ),
+        searchByName: instance(),
+        searchByDates: instance(),
+        registerForTripUseCase: instance()),
   );
 
   //====================
 // Usecases
 
   instance.registerLazySingleton(() => LoginUseCase(instance()));
+  instance.registerLazySingleton(() => SignUpUseCase(instance()));
 
   instance.registerLazySingleton(() => GetTouristProgramsUseCases(instance()));
   instance
@@ -115,8 +152,10 @@ Future<void> init() async {
 
 // Repository
 
-  instance.registerLazySingleton<LoginRepository>(() =>
-      LoginRepositoryImpl(remoteDataSource: instance()));
+  instance.registerLazySingleton<LoginRepository>(
+      () => LoginRepositoryImpl(remoteDataSource: instance()));
+  instance.registerLazySingleton<SignUpRepository>(
+      () => SignUpRepositoryImpl(signUpRemote: instance()));
   instance.registerLazySingleton<TouristProgramsRepository>(() =>
       TouristProgramsRepositoryImpl(
           remoteDataSource: instance(), networkInfo: instance()));
@@ -126,6 +165,8 @@ Future<void> init() async {
 
   instance.registerLazySingleton<LoginRemote>(
       () => LoginRemoteImpl(client: instance()));
+  instance.registerLazySingleton<SignUpRemote>(
+      () => SignUpRemoteImpl(client: instance()));
   instance.registerLazySingleton<TouristProgramsRemoteDataSource>(() =>
       TouristProgramsRemoteDataSourceImpl(
           client: instance(), appPreferences: instance()));
@@ -157,4 +198,114 @@ Future<void> init() async {
   instance.registerLazySingleton(() => sharedPreferences);
   instance.registerLazySingleton(() => http.Client());
   instance.registerLazySingleton(() => InternetConnectionChecker());
+
+  //admin
+  instance.registerLazySingleton<TouristProgramsAdminRemoteDataSource>(
+    () => TouristProgramsAdminRemoteDataSource(
+        client: instance(), appPreferences: instance()),
+  );
+  instance.registerLazySingleton<BussAdminRemoteDataSource>(
+    () => BussAdminRemoteDataSource(
+        client: instance(), appPreferences: instance()),
+  );
+  instance.registerLazySingleton<GuidesAdminRemoteDataSource>(
+    () => GuidesAdminRemoteDataSource(
+        client: instance(), appPreferences: instance()),
+  );
+
+  // Repositories
+  instance.registerLazySingleton<TouristProgramsAdminRepository>(
+    () => TouristProgramsAdminRepositoryImpl(instance()),
+  );
+  instance.registerLazySingleton<BussAdminRepository>(
+    () => BussAdminRepositoryImpl(instance()),
+  );
+  instance.registerLazySingleton<GuidesAdminRepository>(
+    () => GuidesAdminRepositoryImpl(instance()),
+  );
+
+  // Use Cases
+  instance.registerLazySingleton<AddTouristProgramUseCase>(
+    () => AddTouristProgramUseCase(instance()),
+  );
+  instance.registerLazySingleton<DeleteTouristProgramUseCase>(
+    () => DeleteTouristProgramUseCase(instance()),
+  );
+  instance.registerLazySingleton<UpdateTouristProgramUseCase>(
+    () => UpdateTouristProgramUseCase(instance()),
+  );
+
+  instance.registerLazySingleton<GetTouristProgramsUseCase>(
+    () => GetTouristProgramsUseCase(instance()),
+  );
+  //=======
+  instance.registerLazySingleton<AddBusUseCase>(
+    () => AddBusUseCase(instance()),
+  );
+  instance.registerLazySingleton<DeleteBusUseCase>(
+    () => DeleteBusUseCase(instance()),
+  );
+  instance.registerLazySingleton<UpdateBusUseCase>(
+    () => UpdateBusUseCase(instance()),
+  );
+  instance.registerLazySingleton<GetBussUseCase>(
+    () => GetBussUseCase(instance()),
+  );
+//=========================
+  instance.registerLazySingleton<AddGuideUseCase>(
+    () => AddGuideUseCase(instance()),
+  );
+  instance.registerLazySingleton<DeleteGuideUseCase>(
+    () => DeleteGuideUseCase(instance()),
+  );
+
+  instance.registerLazySingleton<GetGuidesUseCase>(
+    () => GetGuidesUseCase(instance()),
+  );
+  // Bloc
+  instance.registerFactory<TouristProgramsAdminBloc>(
+    () => TouristProgramsAdminBloc(
+      addTouristProgramUseCase: instance(),
+      deleteTouristProgramUseCase: instance(),
+      getTouristProgramsUseCase: instance(),
+      updateTouristProgramUseCase: instance(),
+    ),
+  );
+
+  instance.registerFactory<BussAdminBloc>(
+    () => BussAdminBloc(
+      addBusUseCase: instance(),
+      deleteBusUseCase: instance(),
+      getBussUseCase: instance(),
+      updateBusUseCase: instance(),
+    ),
+  );
+  instance.registerFactory<GuidesAdminBloc>(
+    () => GuidesAdminBloc(
+      addGuideUseCase: instance(),
+      deleteGuideUseCase: instance(),
+      getGuidesUseCase: instance(),
+    ),
+  );
+  instance.registerFactory(() => AdminTripsBloc(
+    getTripsUseCase: instance(),
+    deleteTripUseCase: instance(),
+    uploadTripImageUseCase: instance(),
+  ));
+
+  // UseCases
+  instance.registerLazySingleton(() => AdminGetTripsUseCase(instance()));
+  instance.registerLazySingleton(() => DeleteTripUseCase(instance()));
+  instance.registerLazySingleton(() => UploadTripImageUseCase(instance()));
+
+  // Repository
+  instance.registerLazySingleton<AdminTripRepository>(() => AdminTripRepositoryImpl(
+    remoteDataSource: instance(),
+  ));
+
+  // Data sources
+  instance.registerLazySingleton<AdminTripRemoteDataSource>(
+        () => AdminTripRemoteDataSourceImpl(client: instance(),appPreferences: instance()),
+  );
+
 }

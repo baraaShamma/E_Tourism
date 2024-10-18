@@ -1,10 +1,9 @@
 import 'package:e_tourism/Config/injection_container.dart';
-import 'package:e_tourism/Config/navigation/app_route.dart';
 import 'package:e_tourism/app/app_preferences.dart';
 import 'package:e_tourism/core/constant/assets.dart';
 import 'package:e_tourism/core/constant/colors.dart';
 import 'package:e_tourism/core/constant/values_manager.dart';
-import 'package:e_tourism/features/add_for_admin/presentation/pages/add_for_admin_screen.dart';
+import 'package:e_tourism/features/add_for_admin/pages/add_for_admin_screen.dart';
 import 'package:e_tourism/features/main_view/home/home_screen.dart';
 import 'package:e_tourism/features/main_view/my_trips/presentation/pages/my_trips_screen.dart';
 import 'package:e_tourism/features/main_view/profile/profile_screen.dart';
@@ -15,8 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
-
 class MainView extends StatefulWidget {
   final String? index;
 
@@ -79,6 +76,11 @@ class _MainViewState extends State<MainView> {
     "22",
     "23",
   ];
+  List<String> titlesAdmin = [
+    "21",
+    "المسؤول",
+    "23",
+  ];
   int currentIndex = 0;
   int lastIndex = 0;
 
@@ -99,7 +101,9 @@ class _MainViewState extends State<MainView> {
           },
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
-            titles[currentIndex].tr(),
+            appPreferences.getTypeUser() == 'admin'
+                ? titlesAdmin[currentIndex].tr()
+                : titles[currentIndex].tr(),
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
@@ -151,7 +155,9 @@ class _MainViewState extends State<MainView> {
                           ],
                         ),
                       )),
-                      tooltip: titles[index].tr(),
+                      tooltip:   appPreferences.getTypeUser() == 'admin'
+                          ? titlesAdmin[index].tr()
+                          : titles[index].tr(),
                       backgroundColor: Colors.transparent,
                       label: '',
                       activeIcon: SizedBox(
@@ -181,7 +187,9 @@ class _MainViewState extends State<MainView> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: AppSizeW.s2),
                                       child: Text(
-                                        titles[index].tr(),
+                                        appPreferences.getTypeUser() == 'admin'
+                                            ? titlesAdmin[index].tr()
+                                            : titles[index].tr(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall,

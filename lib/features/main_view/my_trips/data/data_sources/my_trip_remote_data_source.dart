@@ -28,7 +28,7 @@ class MyTripRemoteDataSourceImpl implements MyTripRemoteDataSource {
       return tripsJson.map((json) => MyTripModel.fromJson(json)).toList();
     }
     else {
-      throw Exception('Failed to load trips');
+      throw Exception('لم تقم بالمشاركة في اي رحلة');
     }
   }
 }

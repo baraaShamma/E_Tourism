@@ -23,7 +23,7 @@ class TripsBloc extends Bloc<TripsEvent, TripsState> {
         final trips = await getTripsByProgramIdUseCase(event.programId);
         emit(TripsLoaded(trips: trips));
       } catch (e) {
-        emit(TripsError(message: e.toString()));
+        emit(TripsError(message: "لم تقم بالتسجيل في اي رحلة "));
       }
     });
 

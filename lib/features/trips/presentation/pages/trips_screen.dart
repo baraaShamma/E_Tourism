@@ -45,7 +45,7 @@ class TripsScreen extends StatelessWidget {
                   );
                 }
               } else if (state is TripsError) {
-                return Center(child: Text('Error: ${state.message}'));
+                return Center(child: Text('${state.message}'));
               } else {
                 return Center(child: Text('Unexpected State'));
               }

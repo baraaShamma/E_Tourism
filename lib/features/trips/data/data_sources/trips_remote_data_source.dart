@@ -21,6 +21,11 @@ class TripsRemoteDataSource {
         'Authorization': 'Bearer $token',
       },
     );
+    print("===================");
+    print(programId);
+    print(response.body);
+
+    print("===================");
     if (response.statusCode == 200) {
       final data = json.decode(response.body)['data'];
       return data;

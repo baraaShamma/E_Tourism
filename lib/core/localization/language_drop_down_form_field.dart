@@ -27,8 +27,6 @@ class _LanguageDropDownFormFieldStateWeb extends State<LanguageDropDown> {
     return SizedBox(
       child: DropdownButtonFormField2<LanguageType>(
         decoration: InputDecoration(
-          // Add Horizontal padding using menuItemStyleData.padding so it matches
-          // the menu padding when button's width is not specified.
           contentPadding: const EdgeInsets.symmetric(vertical: 16),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),

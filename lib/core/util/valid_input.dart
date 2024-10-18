@@ -8,7 +8,7 @@ extension EmailValidator on String {
   }
 }
 
-validInput(String val, int min, int max, String type, context) {
+validInput(String val, int min, int max, String ?type, context) {
   if (val.isEmpty) {
     return "10".tr();
   }

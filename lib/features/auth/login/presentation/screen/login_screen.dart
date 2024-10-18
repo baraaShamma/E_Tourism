@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: AppSizeH.s40,
                   child: TextLinkWidget(
                     onTap: () {
-                      context.goNamed(RoutesNames.singUpScreen);
+                      context.pushNamed(RoutesNames.singUpScreen);
                     },
                     textOne: "19".tr(),
                     textTwo: "20".tr(),
